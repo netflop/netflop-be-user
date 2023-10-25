@@ -1,0 +1,22 @@
+{
+  "lambda": {
+    "name": "netflop-user-prod",
+    "handler": "com.netflop.be.user.LambdaRequestHandler",
+    "codePath": "../build/distributions/handler.zip",
+    "env": [
+      [
+        "ENV", "prod"
+      ],
+      [
+        "DYNAMODB_MOVIE_TABLE", "netflop-user-prod"
+      ]
+    ]
+  },
+  "api": {
+    "name": "netflop-movie-api-prod",
+    "stage": "prod"
+  },
+  "cognito": {
+    "cognitoPoolId": "us-east-1_lOVWqU7A9"
+  }
+}

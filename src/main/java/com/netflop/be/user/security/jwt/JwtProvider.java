@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtProvider {
-    private static final String USERNAME_FIELD = "username";
+    private static final String USERNAME_FIELD = "cognito:username";
     private static final String BEARER = "Bearer ";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String ROLE_FIELD = "cognito:groups";

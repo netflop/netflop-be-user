@@ -53,4 +53,7 @@ task buildZip(type: Zip) {
 		from(jar)
 		from(configurations.runtimeClasspath)
 	}
+	setArchiveFileName("handler.zip")
 }
+
+build.dependsOn buildZip

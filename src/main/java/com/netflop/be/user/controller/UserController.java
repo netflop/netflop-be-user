@@ -17,13 +17,13 @@ public class UserController {
     private UserService userService;
 
      @GetMapping("/getAdmin")
-     @PreAuthorize("hasAuthority('ADMIN')")
+     @PreAuthorize("hasAuthority('Admin')")
     public UserResponse getAdmin(){
         return userService.getAdmin();
     }
 
     @GetMapping("/getUser")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('User')")
     public UserResponse getUser(){
         return userService.getUser();
     }

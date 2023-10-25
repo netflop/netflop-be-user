@@ -1,0 +1,22 @@
+{
+  "lambda": {
+    "name": "netflop-user-dev",
+    "handler": "com.netflop.be.user.LambdaRequestHandler",
+    "codePath": "../build/distributions/handler.zip",
+    "env": [
+      [
+        "ENV", "dev"
+      ],
+      [
+        "DYNAMODB_MOVIE_TABLE", "netflop-user-dev"
+      ]
+    ]
+  },
+  "api": {
+    "name": "netflop-user-api-dev",
+    "stage": "dev"
+  },
+  "cognito": {
+    "cognitoPoolId": "us-east-1_4arXTVYQZ"
+  }
+}

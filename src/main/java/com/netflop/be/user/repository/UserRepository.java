@@ -23,14 +23,14 @@ public class UserRepository {
     //test
     public UserResponse getUser() {
         return new UserResponse("1","yoralong@gmail.com",
-                "Yora", "Long", "01234567889", "Active", "USER",
+                "Yora", "Long", "01234567889", "Active", "User",
                 null, LocalDateTime.now().toString(),null, LocalDateTime.now().toString(),false);
     }
 
     //test
     public UserResponse getAdmin() {
         return new UserResponse("1","yoralong@gmail.com",
-                "Yora", "Long", "01234567889", "Active", "ADMIN",
+                "Yora", "Long", "01234567889", "Active", "Admin",
                 null, LocalDateTime.now().toString(),null, LocalDateTime.now().toString(),false);
     }
 }

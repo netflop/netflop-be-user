@@ -39,9 +39,12 @@ dependencies {
 	implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
 	implementation 'software.amazon.awssdk:cognitoidentityprovider:2.20.92'
 
-	// https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
+	// Authorization JWT
 	implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.15.1'
 
+	// Connect DynamoDB
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.85'
+	implementation group: 'com.github.derjust', name: 'spring-data-dynamodb', version: '5.1.0'
 }
 
 tasks.named('test') {

@@ -25,24 +25,24 @@ public class UserController {
         return ResponseEntity.ok(new MessageDto("Welcome to NetFlop"));
     }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('Admin')")
     public User getByUserId(@PathVariable("userId") String userId){
         return userService.findByUserId(userId);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     @PreAuthorize("hasAuthority('Admin')")
     public User addUser(@RequestBody User user){
         return userService.save(user);
     }
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('Admin')")
     public String updateUser(@PathVariable("userId") String userId, @RequestBody User user){
         return userService.updateUser(userId,user);
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('Admin')")
     public String updateUser(@PathVariable("userId") String userId){
         return userService.deleteByUserId(userId);

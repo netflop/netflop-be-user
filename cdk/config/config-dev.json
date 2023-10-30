@@ -17,6 +17,6 @@
     "stage": "dev"
   },
   "cognito": {
-    "cognitoPoolId": "us-east-1_4arXTVYQZ"
+    "cognitoPoolId": "us-east-1_vFi6R9pRZ"
   }
 }

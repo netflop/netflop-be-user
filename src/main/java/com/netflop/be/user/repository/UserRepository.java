@@ -27,7 +27,6 @@ public class UserRepository {
         user.setUpdated_at(helper.DatetimeFormatUTC(now));
         user.setType(USER);
         user.setStatus(ACTIVE);
-        user.setIs_deleted(false);
         dynamoDBMapper.save(user);
         return user;
     }

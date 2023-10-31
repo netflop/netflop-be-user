@@ -21,7 +21,7 @@ public class DynamoDBConfiguration {
 
     @Bean
     public DynamoDBMapper dynamoDBMapper(){
-        return new DynamoDBMapper(buildAmazonDynamoDB(),new DynamoDBMapperConfig(DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES));
+        return new DynamoDBMapper(buildAmazonDynamoDB(), new DynamoDBMapperConfig.Builder().withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES).build());
     }
 
     @Bean

@@ -31,8 +31,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtEntryPoint))
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("*/hello").permitAll()
-                                .anyRequest().authenticated()
+                        auth -> auth//.requestMatchers("*/hello").permitAll()
+                                //.anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

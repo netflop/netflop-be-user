@@ -6,7 +6,6 @@ import com.netflop.be.user.repository.UserRepository;
 import com.netflop.be.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,24 +25,24 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('Admin')")
+    //@PreAuthorize("hasAuthority('Admin')")
     public User getByUserId(@PathVariable("userId") String userId){
         return userService.findByUserId(userId);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('Admin')")
+    //@PreAuthorize("hasAuthority('Admin')")
     public User addUser(@RequestBody User user){
         return userService.save(user);
     }
     @PutMapping("/{userId}")
-    @PreAuthorize("hasAuthority('Admin')")
+    //@PreAuthorize("hasAuthority('Admin')")
     public String updateUser(@PathVariable("userId") String userId, @RequestBody User user){
         return userService.updateUser(userId,user);
     }
 
     @DeleteMapping("/{userId}")
-    @PreAuthorize("hasAuthority('Admin')")
+    //@PreAuthorize("hasAuthority('Admin')")
     public String updateUser(@PathVariable("userId") String userId){
         return userService.deleteByUserId(userId);
     }

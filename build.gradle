@@ -37,14 +37,18 @@ dependencies {
 
 	// handler lambda
 	implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+	implementation 'com.amazonaws:aws-lambda-java-events:2.0.2'
 	implementation 'software.amazon.awssdk:cognitoidentityprovider:2.20.92'
 
 	// Authorization JWT
-	implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.15.1'
+	implementation 'com.nimbusds:nimbus-jose-jwt:9.15.1'
 
 	// Connect DynamoDB
-	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.85'
-	implementation group: 'com.github.derjust', name: 'spring-data-dynamodb', version: '5.1.0'
+	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.85'
+	implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
+
+	// Convert String to Object
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
 }
 
 tasks.named('test') {

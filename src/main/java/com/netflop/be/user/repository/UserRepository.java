@@ -20,6 +20,8 @@ public class UserRepository {
     @Autowired
     private Helper helper;
     public User save(User user) {
+        log.info("User đã vào repository:" + user);
+
         Date now = new Date();
         user.setCreated_by(CREATED_BY);
         user.setCreated_at(helper.DatetimeFormatUTC(now));
@@ -31,6 +33,7 @@ public class UserRepository {
         return user;
     }
     public User findByUserId(String userId) {
+        log.info("UserId = "+ userId+ " đã vào repository");
         return dynamoDBMapper.load(User.class, userId);
     }
 

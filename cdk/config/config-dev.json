@@ -12,7 +12,7 @@
       ]
     ],
     "role": [
-      "arn:aws:iam::841852387514:role/service-role/crud-netflop-user-role"
+      "crud-netflop-user-role"
     ]
   },
   "api": {

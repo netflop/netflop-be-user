@@ -13,7 +13,7 @@ import software.constructs.Construct;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.Duration;
-import software.amazon.awscdk.services.iam.Role;
+import software.amazon.awscdk.services.iam.IRole;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,7 +48,7 @@ public class CdkStack extends Stack {
         ConfigDTO config = new Gson().fromJson(br, ConfigDTO.class);
 
         // Define the existing IAM role by ARN or name
-        Role existingRole = Role.fromRoleArn(this, "crud-netflop-user-role", config.getLambda().getRole());
+        Role existingRole = Role.fromRoleArn(this, "crud-netflop-user-role", "arn:aws:iam::841852387514:role/service-role/crud-netflop-user-role");
 
         final var lambda = Function.Builder
                 .create(this, "netflop-user-lambda")

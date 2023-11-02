@@ -20,8 +20,6 @@ public class UserRepository {
     @Autowired
     private Helper helper;
     public User save(User user) {
-        log.info("User đã vào repository:" + user);
-
         Date now = new Date();
         user.setCreated_by(CREATED_BY);
         user.setCreated_at(helper.DatetimeFormatUTC(now));
@@ -30,15 +28,19 @@ public class UserRepository {
         user.setType(USER);
         user.setStatus(ACTIVE);
         dynamoDBMapper.save(user);
+        log.info("User added success:" + user);
         return user;
     }
     public User findByUserId(String userId) {
-        log.info("UserId = "+ userId+ " đã vào repository");
-        return dynamoDBMapper.load(User.class, userId);
+        log.info("UserId = "+ userId+ " is finding...");
+        User user = dynamoDBMapper.load(User.class, userId);
+        log.info("User = "+ user);
+        return user;
     }
 
     public String deleteByUserId(String userId) {
         dynamoDBMapper.delete(dynamoDBMapper.load(User.class, userId));
+        log.info("User Id:" +userId + " deleted");
         return "User Id:" +userId + " deleted";
     }
 
@@ -51,6 +53,7 @@ public class UserRepository {
                         )
                 )
         );
+        log.info("User Id:" +userId + " updated");
         return "User Id:" +userId + " updated";
     }
 }

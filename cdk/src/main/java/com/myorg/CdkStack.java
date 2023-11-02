@@ -54,8 +54,10 @@ public class CdkStack extends Stack {
                 .runtime(Runtime.JAVA_17)
                 .handler(config.getLambda().getHandler())
                 .code(Code.fromAsset(config.getLambda().getCodePath()))
-                .timeout(Duration.seconds(30))
+                .timeout(Duration.seconds(60))
+                .memorySize(512)
                 .functionName(config.getLambda().getName())
+                .role(config.getLambda().getRole())
                 .environment(config.getLambda()
                                      .getEnv())
                 .build();

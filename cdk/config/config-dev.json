@@ -10,6 +10,9 @@
       [
         "DYNAMODB_MOVIE_TABLE", "netflop-user-dev"
       ]
+    ],
+    "role": [
+      "arn:aws:iam::841852387514:role/service-role/crud-netflop-user-role"
     ]
   },
   "api": {

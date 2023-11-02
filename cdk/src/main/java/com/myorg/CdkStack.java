@@ -33,7 +33,6 @@ public class CdkStack extends Stack {
         super(scope, id, props);
 
         String env = (String)this.getNode().tryGetContext("env");
-
         if(env == null || env.isEmpty()) {
             env = "dev";
         }
@@ -49,6 +48,9 @@ public class CdkStack extends Stack {
 
         ConfigDTO config = new Gson().fromJson(br, ConfigDTO.class);
 
+        // Define the existing IAM role by ARN or name
+        Role existingRole = Role.fromRoleArn(this, "crud-netflop-user-role", config.getLambda().getRole());
+
         final var lambda = Function.Builder
                 .create(this, "netflop-user-lambda")
                 .runtime(Runtime.JAVA_17)
@@ -57,7 +59,7 @@ public class CdkStack extends Stack {
                 .timeout(Duration.seconds(60))
                 .memorySize(512)
                 .functionName(config.getLambda().getName())
-                .role(config.getLambda().getRole())
+                .role(existingRole)
                 .environment(config.getLambda()
                                      .getEnv())
                 .build();

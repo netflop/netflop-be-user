@@ -46,7 +46,6 @@ public class CdkStack extends Stack {
 
         ConfigDTO config = new Gson().fromJson(br, ConfigDTO.class);
 
-        // Define the existing IAM role by ARN or name
         final var lambda = Function.Builder
                 .create(this, "netflop-user-lambda")
                 .runtime(Runtime.JAVA_17)
@@ -58,10 +57,11 @@ public class CdkStack extends Stack {
                 .environment(config.getLambda().getEnv())
                 .build();
 
+        // Define the existing IAM role by ARN or name
         lambda.addToRolePolicy(PolicyStatement.Builder.create()
                 .effect(Effect.ALLOW)
                 .actions(Arrays.asList("dynamodb:*", "logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents", "s3:*"))
-                .resources("*")
+                .resources(Arrays.asList("*"))
                 .build());
 
         final var api = RestApi.Builder

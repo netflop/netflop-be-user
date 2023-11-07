@@ -66,7 +66,7 @@ public class CdkStack extends Stack {
                         "logs:CreateLogStream",
                         "logs:PutLogEvents",
                         "s3:*"))
-                .resources("*"))
+                .resources("*")
                 .build());
 
         final var api = RestApi.Builder

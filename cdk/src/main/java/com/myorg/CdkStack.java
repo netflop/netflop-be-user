@@ -20,8 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.MessageFormat;
 import static java.util.Map.entry;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CdkStack extends Stack {
     public CdkStack(final Construct scope, final String id) {

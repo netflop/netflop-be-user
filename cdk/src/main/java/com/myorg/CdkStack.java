@@ -61,11 +61,7 @@ public class CdkStack extends Stack {
 
         lambda.addToRolePolicy(PolicyStatement.Builder.create()
                 .effect(Effect.ALLOW)
-                .actions(List.of("dynamodb:*",
-                        "logs:CreateLogGroup",
-                        "logs:CreateLogStream",
-                        "logs:PutLogEvents",
-                        "s3:*"))
+                .actions(Arrays.asList("dynamodb:*", "logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents", "s3:*"))
                 .resources("*")
                 .build());
 

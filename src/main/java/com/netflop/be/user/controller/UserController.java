@@ -2,6 +2,7 @@ package com.netflop.be.user.controller;
 
 import com.netflop.be.user.model.response.MessageResponse;
 import com.netflop.be.user.model.User;
+import com.netflop.be.user.model.response.UserResponse;
 import com.netflop.be.user.repository.UserRepository;
 import com.netflop.be.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,13 @@ public class UserController {
 
     @GetMapping("/{userId}")
     //@PreAuthorize("hasAuthority('Admin')")
-    public User getByUserId(@PathVariable("userId") String userId){
+    public UserResponse getByUserId(@PathVariable("userId") String userId){
         return userService.findByUserId(userId);
     }
 
     @PostMapping
     //@PreAuthorize("hasAuthority('Admin')")
-    public User addUser(@RequestBody User user){
+    public UserResponse addUser(@RequestBody User user){
         return userService.save(user);
     }
     @PutMapping("/{userId}")

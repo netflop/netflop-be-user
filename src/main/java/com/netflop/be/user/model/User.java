@@ -18,24 +18,24 @@ public class User {
     @DynamoDBAttribute(attributeName = "email")
     private String email;
     @DynamoDBAttribute(attributeName = "first_name")
-    private String first_name;
+    private String firstName;
     @DynamoDBAttribute(attributeName = "last_name")
-    private String last_name;
+    private String lastName;
     @DynamoDBAttribute(attributeName = "phone_number")
-    private String phone_number;
+    private String phoneNumber;
     @DynamoDBAttribute(attributeName = "status")
     private String status;
     @DynamoDBAttribute(attributeName = "type")
     private String type;
     @DynamoDBAttribute(attributeName = "created_by")
-    private String created_by;
+    private String createdBy;
     @DynamoDBAttribute(attributeName = "created_at")
-    private String created_at;
+    private String createdAt;
     @DynamoDBAttribute(attributeName = "updated_by")
-    private String updated_by;
+    private String updatedBy;
     @DynamoDBAttribute(attributeName = "updated_at")
-    private String updated_at;
+    private String updatedAt;
     @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.BOOL)
     @DynamoDBAttribute(attributeName = "is_deleted")
-    private Boolean is_deleted = false;
+    private Boolean isDeleted = false;
 }

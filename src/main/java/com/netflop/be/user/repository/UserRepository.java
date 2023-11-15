@@ -3,8 +3,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.netflop.be.user.helper.AppMapper;
 import com.netflop.be.user.helper.Helper;
 import com.netflop.be.user.model.User;
+import com.netflop.be.user.model.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,24 +20,28 @@ public class UserRepository {
     private DynamoDBMapper dynamoDBMapper;
 
     @Autowired
+    private AppMapper appMapper;
+
+    @Autowired
     private Helper helper;
-    public User save(User user) {
+    public UserResponse save(User user) {
         Date now = new Date();
-        user.setCreated_by(CREATED_BY);
-        user.setCreated_at(helper.DatetimeFormatUTC(now));
-        user.setUpdated_by(CREATED_BY);
-        user.setUpdated_at(helper.DatetimeFormatUTC(now));
+        user.setCreatedBy(CREATED_BY);
+        user.setCreatedAt(helper.DatetimeFormatUTC(now));
+        user.setUpdatedBy(CREATED_BY);
+        user.setUpdatedAt(helper.DatetimeFormatUTC(now));
         user.setType(USER);
         user.setStatus(ACTIVE);
         dynamoDBMapper.save(user);
         log.info("User added success:" + user);
-        return user;
+        return appMapper.ConvertToUserResponse(user);
     }
-    public User findByUserId(String userId) {
+    public UserResponse findByUserId(String userId) {
         log.info("UserId = "+ userId+ " is finding...");
         User user = dynamoDBMapper.load(User.class, userId);
         log.info("User = "+ user);
-        return user;
+
+        return appMapper.ConvertToUserResponse(user);
     }
 
     public String deleteByUserId(String userId) {

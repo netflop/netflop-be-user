@@ -85,7 +85,7 @@ public class CdkStack extends Stack {
                 .build();
 
         api.getRoot()
-                .addResource("{user}").addResource("{proxy+}").addMethod("ANY", lambdaIntegration,
+                .addResource("user").addResource("{proxy+}").addMethod("ANY", lambdaIntegration,
                                                         MethodOptions.builder()
                                                                 .authorizer(authorizer)
                                                                 .authorizationType(AuthorizationType.COGNITO)

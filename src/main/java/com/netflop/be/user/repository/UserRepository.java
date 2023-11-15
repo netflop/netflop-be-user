@@ -1,36 +1,59 @@
 package com.netflop.be.user.repository;
-import com.netflop.be.user.entity.User;
-import com.netflop.be.user.model.UserResponse;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.netflop.be.user.helper.Helper;
+import com.netflop.be.user.model.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import java.time.LocalDateTime;
+import java.util.Date;
+import static com.netflop.be.user.helper.Constants.*;
 
 @Repository
+@Slf4j
 public class UserRepository {
-    public UserRepository() {
+    @Autowired
+    private DynamoDBMapper dynamoDBMapper;
+
+    @Autowired
+    private Helper helper;
+    public User save(User user) {
+        Date now = new Date();
+        user.setCreated_by(CREATED_BY);
+        user.setCreated_at(helper.DatetimeFormatUTC(now));
+        user.setUpdated_by(CREATED_BY);
+        user.setUpdated_at(helper.DatetimeFormatUTC(now));
+        user.setType(USER);
+        user.setStatus(ACTIVE);
+        dynamoDBMapper.save(user);
+        log.info("User added success:" + user);
+        return user;
+    }
+    public User findByUserId(String userId) {
+        log.info("UserId = "+ userId+ " is finding...");
+        User user = dynamoDBMapper.load(User.class, userId);
+        log.info("User = "+ user);
+        return user;
     }
 
-    public void save(User user) {
+    public String deleteByUserId(String userId) {
+        dynamoDBMapper.delete(dynamoDBMapper.load(User.class, userId));
+        log.info("User Id:" +userId + " deleted");
+        return "User Id:" +userId + " deleted";
     }
 
-    //test
-    public UserResponse findAllUser() {
-        return new UserResponse("1","yoralong@gmail.com",
-                "Yora", "Long", "01234567889", "Active", "User",
-                null, LocalDateTime.now().toString(),null, LocalDateTime.now().toString(),false);
-    }
-
-
-    //test
-    public UserResponse getUser() {
-        return new UserResponse("1","yoralong@gmail.com",
-                "Yora", "Long", "01234567889", "Active", "User",
-                null, LocalDateTime.now().toString(),null, LocalDateTime.now().toString(),false);
-    }
-
-    //test
-    public UserResponse getAdmin() {
-        return new UserResponse("1","yoralong@gmail.com",
-                "Yora", "Long", "01234567889", "Active", "Admin",
-                null, LocalDateTime.now().toString(),null, LocalDateTime.now().toString(),false);
+    public String updateUser(String userId,User user) {
+        user.setId(userId);
+        dynamoDBMapper.save(user,
+                new DynamoDBSaveExpression().withExpectedEntry("user_id",
+                        new ExpectedAttributeValue(
+                                new AttributeValue().withS(userId)
+                        )
+                )
+        );
+        log.info("User Id:" +userId + " updated");
+        return "User Id:" +userId + " updated";
     }
 }

@@ -13,16 +13,14 @@ import software.constructs.Construct;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.Duration;
-
+import software.amazon.awscdk.services.iam.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.MessageFormat;
 import static java.util.Map.entry;
-
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CdkStack extends Stack {
     public CdkStack(final Construct scope, final String id) {
@@ -33,7 +31,6 @@ public class CdkStack extends Stack {
         super(scope, id, props);
 
         String env = (String)this.getNode().tryGetContext("env");
-
         if(env == null || env.isEmpty()) {
             env = "dev";
         }
@@ -54,11 +51,18 @@ public class CdkStack extends Stack {
                 .runtime(Runtime.JAVA_17)
                 .handler(config.getLambda().getHandler())
                 .code(Code.fromAsset(config.getLambda().getCodePath()))
-                .timeout(Duration.seconds(30))
+                .timeout(Duration.seconds(60))
+                .memorySize(512)
                 .functionName(config.getLambda().getName())
-                .environment(config.getLambda()
-                                     .getEnv())
+                .environment(config.getLambda().getEnv())
                 .build();
+
+        // Define the existing IAM role by ARN or name
+        lambda.addToRolePolicy(PolicyStatement.Builder.create()
+                .effect(Effect.ALLOW)
+                .actions(Arrays.asList("dynamodb:*", "logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents", "s3:*"))
+                .resources(Arrays.asList("*"))
+                .build());
 
         final var api = RestApi.Builder
                 .create(this, "netflop-user-restapi")
@@ -80,7 +84,8 @@ public class CdkStack extends Stack {
                 .create(lambda)
                 .build();
 
-        api.getRoot().addResource("{proxy+}").addMethod("ANY", lambdaIntegration,
+        api.getRoot()
+                .addResource("{user}").addResource("{proxy+}").addMethod("ANY", lambdaIntegration,
                                                         MethodOptions.builder()
                                                                 .authorizer(authorizer)
                                                                 .authorizationType(AuthorizationType.COGNITO)

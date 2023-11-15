@@ -13,19 +13,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.netflop.be.user")
 public class UserApplication {
-	@Value("${com.tutorial.jwt.aws.connectionTimeout}")
+	@Value("${jwt.aws.connectionTimeout}")
 	public int connectionTimeout;
 
-	@Value("${com.tutorial.jwt.aws.readTimeout}")
+	@Value("${jwt.aws.readTimeout}")
 	public int readTimeout;
 
-	@Value("${com.tutorial.jwt.aws.jwkUrl}")
+	@Value("${jwt.aws.jwkUrl}")
 	public String jwkUrl;
 
 	public static void main(String[] args) {
@@ -44,5 +46,4 @@ public class UserApplication {
 
 		return jwtProcessor;
 	}
-
 }

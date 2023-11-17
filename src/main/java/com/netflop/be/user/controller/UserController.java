@@ -1,9 +1,8 @@
 package com.netflop.be.user.controller;
 
-import com.netflop.be.user.model.response.MessageResponse;
 import com.netflop.be.user.model.User;
+import com.netflop.be.user.model.response.MessageResponse;
 import com.netflop.be.user.model.response.UserResponse;
-import com.netflop.be.user.repository.UserRepository;
 import com.netflop.be.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 

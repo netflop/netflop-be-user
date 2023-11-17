@@ -1,9 +1,9 @@
 package com.netflop.be.user.model.request;
+
 import lombok.Data;
 
 @Data
-public class UserLoginRequestPayload {
+public class ConfirmSignUpRequest {
     private String userName;
-    private String password;
-    private String newPassword;
+    private String confirmationCode;
 }

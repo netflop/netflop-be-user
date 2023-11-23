@@ -1,12 +1,7 @@
-package com.netflop.be.user.model;
-
-import lombok.AllArgsConstructor;
+package com.netflop.be.user.model.response;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserResponse {
     private String id;
     private String email;
@@ -19,5 +14,5 @@ public class UserResponse {
     private String created_at;
     private String updated_by;
     private String updated_at;
-    private Boolean is_deleted;
+    private Boolean is_deleted = false;
 }

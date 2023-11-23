@@ -1,4 +1,4 @@
-package com.netflop.be.user.dto;
+package com.netflop.be.user.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageDto {
+public class MessageResponse {
     private String message;
 }

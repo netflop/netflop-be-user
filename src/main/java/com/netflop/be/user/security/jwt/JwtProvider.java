@@ -1,5 +1,4 @@
 package com.netflop.be.user.security.jwt;
-
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,24 +10,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import static com.netflop.be.user.helper.Constants.*;
 
 @Component
 @Slf4j
 public class JwtProvider {
-    private static final String USERNAME_FIELD = "cognito:username";
-    private static final String BEARER = "Bearer ";
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String ROLE_FIELD = "cognito:groups";
-
-    @Value("${com.tutorial.jwt.aws.identityPoolUrl}")
+    @Value("${jwt.aws.identityPoolUrl}")
     public String identityPoolUrl;
 
     @Autowired
     ConfigurableJWTProcessor configurableJWTProcessor;
-
     public Authentication authenticate(HttpServletRequest request) throws Exception {
         String token = getToken(request.getHeader(AUTHORIZATION_HEADER));
         if(token != null && !token.isEmpty()){
@@ -58,6 +51,9 @@ public class JwtProvider {
     }
 
     private String getToken(String token){
+        if(token == null){
+            return null;
+        }
         return token.startsWith(BEARER) ? token.substring(BEARER.length()) : token;
     }
 

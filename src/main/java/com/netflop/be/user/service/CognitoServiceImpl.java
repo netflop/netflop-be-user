@@ -1,13 +1,7 @@
 package com.netflop.be.user.service;
 
-import com.netflop.be.user.model.request.ConfirmSignUpRequest;
-import com.netflop.be.user.model.request.ResendConfirmationCodeRequest;
-import com.netflop.be.user.model.request.SignInRequest;
-import com.netflop.be.user.model.request.SignUpRequest;
-import com.netflop.be.user.model.response.ConfirmSignUpResponse;
-import com.netflop.be.user.model.response.ResendConfirmationCodeResponse;
-import com.netflop.be.user.model.response.SignInResponse;
-import com.netflop.be.user.model.response.SignUpResponse;
+import com.netflop.be.user.model.request.*;
+import com.netflop.be.user.model.response.*;
 import com.netflop.be.user.repository.CognitoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +28,15 @@ public class CognitoServiceImpl implements CognitoService{
     @Override
     public ResendConfirmationCodeResponse resendConfirmationCode(ResendConfirmationCodeRequest resendConfirmationCodeRequest) throws Exception {
         return cognitoRepository.resendConfirmationCode(resendConfirmationCodeRequest);
+    }
+
+    @Override
+    public ForgotPasswordResponse forgotPassword(ForgotPasswordRequest forgotPasswordRequest) throws Exception {
+        return cognitoRepository.forgotPassword(forgotPasswordRequest);
+    }
+
+    @Override
+    public ConfirmForgotPasswordResponse confirmForgotPassword(ConfirmForgotPasswordRequest confirmForgotPasswordRequest) throws Exception {
+        return cognitoRepository.confirmForgotPassword(confirmForgotPasswordRequest);
     }
 }

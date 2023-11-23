@@ -96,7 +96,7 @@ public class CdkStack extends Stack {
                         .authorizationType(AuthorizationType.COGNITO)
                         .build());
 
-        api.getRoot().addResource("cognito").addResource("login").addMethod("POST", lambdaIntegration);
+        api.getRoot().addResource("cognito").addResource("{proxy+}").addMethod("ANY", lambdaIntegration);
 
     }
 }

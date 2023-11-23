@@ -5,10 +5,7 @@ import com.amazonaws.services.cognitoidp.model.*;
 import com.netflop.be.user.model.request.ConfirmSignUpRequest;
 import com.netflop.be.user.model.request.SignInRequest;
 import com.netflop.be.user.model.request.SignUpRequest;
-import com.netflop.be.user.model.response.ConfirmSignUpResponse;
-import com.netflop.be.user.model.response.ResendConfirmationCodeResponse;
-import com.netflop.be.user.model.response.SignInResponse;
-import com.netflop.be.user.model.response.SignUpResponse;
+import com.netflop.be.user.model.response.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import java.util.HashMap;
@@ -131,6 +128,46 @@ public class CognitoRepository {
             }
             cognitoClient.shutdown();
             return resendConfirmationCodeResponse;
+        } catch (Exception e) {
+            cognitoClient.shutdown();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public ForgotPasswordResponse forgotPassword(com.netflop.be.user.model.request.ForgotPasswordRequest request) throws Exception {
+        AWSCognitoIdentityProvider cognitoClient = AWSCognitoIdentityProviderClientBuilder.standard().withRegion(region).build();
+        ForgotPasswordResponse forgotPasswordResponse = new ForgotPasswordResponse();
+        final com.amazonaws.services.cognitoidp.model.ForgotPasswordRequest forgotPasswordRequest = new com.amazonaws.services.cognitoidp.model.ForgotPasswordRequest();
+        forgotPasswordRequest.withClientId(clientId)
+                .withUsername(request.getUserName());
+        try {
+            ForgotPasswordResult result = cognitoClient.forgotPassword(forgotPasswordRequest);
+            if(result.getSdkHttpMetadata().getHttpStatusCode() == 200){
+                forgotPasswordResponse.setCodeDeliveryDetails(result.getCodeDeliveryDetails());
+            }
+            cognitoClient.shutdown();
+            return forgotPasswordResponse;
+        } catch (Exception e) {
+            cognitoClient.shutdown();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public ConfirmForgotPasswordResponse confirmForgotPassword(com.netflop.be.user.model.request.ConfirmForgotPasswordRequest request) throws Exception {
+        AWSCognitoIdentityProvider cognitoClient = AWSCognitoIdentityProviderClientBuilder.standard().withRegion(region).build();
+        ConfirmForgotPasswordResponse confirmForgotPasswordResponse = new ConfirmForgotPasswordResponse();
+        final com.amazonaws.services.cognitoidp.model.ConfirmForgotPasswordRequest confirmForgotPasswordRequest = new com.amazonaws.services.cognitoidp.model.ConfirmForgotPasswordRequest();
+        confirmForgotPasswordRequest.withClientId(clientId)
+                .withUsername(request.getUserName())
+                .withPassword(request.getPassword())
+                .withConfirmationCode(request.getConfirmationCode());
+        try {
+            ConfirmForgotPasswordResult result = cognitoClient.confirmForgotPassword(confirmForgotPasswordRequest);
+            if(result.getSdkHttpMetadata().getHttpStatusCode() == 200){
+                confirmForgotPasswordResponse.setMessage("Change password success.");
+            }
+            cognitoClient.shutdown();
+            return confirmForgotPasswordResponse;
         } catch (Exception e) {
             cognitoClient.shutdown();
             throw new Exception(e.getMessage());

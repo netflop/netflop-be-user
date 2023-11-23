@@ -1,13 +1,7 @@
 package com.netflop.be.user.controller;
 
-import com.netflop.be.user.model.request.ConfirmSignUpRequest;
-import com.netflop.be.user.model.request.ResendConfirmationCodeRequest;
-import com.netflop.be.user.model.request.SignInRequest;
-import com.netflop.be.user.model.request.SignUpRequest;
-import com.netflop.be.user.model.response.ConfirmSignUpResponse;
-import com.netflop.be.user.model.response.ResendConfirmationCodeResponse;
-import com.netflop.be.user.model.response.SignInResponse;
-import com.netflop.be.user.model.response.SignUpResponse;
+import com.netflop.be.user.model.request.*;
+import com.netflop.be.user.model.response.*;
 import com.netflop.be.user.service.CognitoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +51,26 @@ public class CognitoController {
         try{
             ResendConfirmationCodeResponse resendConfirmationCodeResponse = cognitoService.resendConfirmationCode(resendConfirmationCodeRequest);
             return ResponseEntity.ok(resendConfirmationCodeResponse);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Object> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest){
+        try{
+            ForgotPasswordResponse forgotPasswordResponse = cognitoService.forgotPassword(forgotPasswordRequest);
+            return ResponseEntity.ok(forgotPasswordResponse);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/confirm-forgot-password")
+    public ResponseEntity<Object> confirmForgotPassword(@RequestBody ConfirmForgotPasswordRequest confirmForgotPasswordRequest){
+        try{
+            ConfirmForgotPasswordResponse confirmForgotPasswordResponse = cognitoService.confirmForgotPassword(confirmForgotPasswordRequest);
+            return ResponseEntity.ok(confirmForgotPasswordResponse);
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
